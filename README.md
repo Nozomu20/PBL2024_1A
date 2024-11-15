@@ -1,3 +1,7 @@
+## 動作確認用URL
+
+http://nono1224.starfree.jp/pbl/info.php
+
 ## 内容
 ・お知らせの表示、書き込み等の処理
 
