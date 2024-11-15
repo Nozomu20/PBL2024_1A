@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シフト管理システム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .title-bar {
+            background-color: #e9c6a7;
+            color: black;
+            padding: 25px;
+            text-align: left;
+            font-size: 45px;
+        }
+        .container {
+            width: 100%;
+            margin: auto;
+            padding-top: 20px;
+        }
+        .header {
+            margin-bottom: 20px;
+        }
+        .header h2 {
+            margin: 0;
+            font-size: 45px;
+            text-decoration: underline; 
+            font-weight: normal;
+        }
+        .header label {
+            font-size: 25px;
+        }
+        .header select {
+            padding: 5px;
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="title-bar">
+    愛媛新聞社　シフト管理システム
+</div>
+
+<div class="container">
+    <div class="header">
+        <h2>シフト表示</h2>&nbsp;&nbsp;&nbsp;&nbsp;
+        <label for="day-select">表示するシフト</label>
+        &nbsp;&nbsp;&nbsp;
+        <select id="day-select">
+            <option value="月">月</option>
+            <option value="火">火</option>
+            <option value="水">水</option>
+            <option value="木">木</option>
+            <option value="金">金</option>
+            <option value="土">土</option>
+            <option value="日">日</option>
+        </select>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
