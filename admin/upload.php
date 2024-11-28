@@ -17,7 +17,7 @@ if (is_uploaded_file($_FILES["csvfile"]["tmp_name"])) {
            echo '<div class="contact">';
            echo "<h2>シフト作成者 様へ</h2>";
            echo '<dl class="form-area">';
-           echo "<div class='form-text'>本シフト作成ツールをご利用いただき、ありがとうございます。
+           echo "<div class='form-text'>本シフト作成ツールをご利用いただき、ありがとうございますA。
            恐れ入りますが、入力したファイル、もしくは入力していただいた年月に誤りがあるようです。下記ボタンから再度やり直してください。</div>";
            echo '</dl>';
            echo '</div>';
@@ -40,13 +40,15 @@ if (is_uploaded_file($_FILES["csvfile"]["tmp_name"])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // フォームからのデータを取得
     $selectedOption = $_POST["部署選択"];
-
+    
     // 部署によって処理を分岐
     switch ($selectedOption) {
+      
         case "デジタル報道部配信班":
             // デジタル報道部配信班の処理
             #echo "デジタル報道部配信班が選択されました。";
-            $cmd = '/venv/bin/python3 degitalstreaming_shift_make.py'.' '.$file.' '.$_POST['year'].' '.$_POST['month'].' '.'2>&1';
+            $cmd = '/Users/nozomumorioka/.pyenv/shims/python3 degitalstreaming_shift_make.py'.' '.$file.' '.$_POST['year'].' '.$_POST['month'].' '.'2>&1';
+            //echo $selectedOption;
             exec($cmd, $opt, $return_ver);
 	        //print_r($opt);
             //echo '実行結果：'.$return_ver;
@@ -118,7 +120,7 @@ if (is_uploaded_file($_FILES["csvfile"]["tmp_name"])) {
            echo '<div class="contact">';
            echo "<h2>シフト作成者 様へ</h2>";
            echo '<dl class="form-area">';
-           echo "<div class='form-text'>本シフト作成ツールをご利用いただき、ありがとうございます。
+           echo "<div class='form-text'>本シフト作成ツールをご利用いただき、ありがとうございますB。
            恐れ入りますが、入力したファイル、もしくは入力していただいた年月に誤りがあるようです。下記ボタンから再度やり直してください。</div>";
            echo '</dl>';
            echo '</div>';
@@ -140,7 +142,7 @@ if (is_uploaded_file($_FILES["csvfile"]["tmp_name"])) {
   echo '<div class="contact">';
   echo "<h2>シフト作成者 様へ</h2>";
   echo '<dl class="form-area">';
-  echo "<div class='form-text'>本シフト作成ツールをご利用いただき、ありがとうございます。
+  echo "<div class='form-text'>本シフト作成ツールをご利用いただき、ありがとうございますC。
   恐れ入りますが、入力したファイルに誤りがあるようです。下記ボタンから再度やり直してください。</div>";
   echo '</dl>';
   echo '</div>';
