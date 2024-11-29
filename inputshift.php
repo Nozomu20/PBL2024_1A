@@ -4,30 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>シフト希望入力</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        label {
-            margin-right: 10px;
-        }
-        #days label {
-            display: inline-block;
-            margin: 5px;
-        }
-        .error {
-            color: red;
-            margin-top: 20px;
-        }
-    </style>
     <script>
         // 月が変更されたときの日数生成
         function updateDays() {
             const month = document.getElementById("month").value;
-            const daysInMonth = new Date(2024, month, 0).getDate();  // 月の最終日取得
+            const daysInMonth = new Date(2024, month, 0).getDate(); // 月の最終日取得
             const daysContainer = document.getElementById("days");
-            daysContainer.innerHTML = '';  // 前の内容をクリア
+            daysContainer.innerHTML = ''; // 前の内容をクリア
 
             for (let i = 1; i <= daysInMonth; i++) {
                 const checkbox = document.createElement("input");
@@ -55,7 +38,7 @@
             }
         }
 
-        window.onload = updateDays;  // ページ読み込み時に初期化
+        window.onload = updateDays; // ページ読み込み時に初期化
     </script>
 </head>
 <body>
@@ -72,7 +55,7 @@
         </select><br><br>
 
         <div id="days"></div>
-        
+
         <button type="submit">CSV出力</button>
     </form>
 
@@ -89,16 +72,43 @@
         } elseif (empty($selectedDays)) {
             echo "<p class='error'>休み希望日を選択してください。</p>";
         } else {
-            // CSVデータの生成
-            $csvData = [$name, implode(", ", $selectedDays)];
-            $filename = "req{$month}.csv";
+            $filename = "req{$month}.csv"; // 月ごとのCSVファイル
+            $updatedData = [];
+            $newData = [$name, implode(", ", $selectedDays)];
+            $isUpdated = false;
 
-            // CSVに保存
-            $file = fopen($filename, 'a');
-            fputcsv($file, $csvData);
+            // ファイルが存在する場合、既存データを読み込み
+            if (file_exists($filename)) {
+                $file = fopen($filename, 'r');
+                while (($row = fgetcsv($file)) !== false) {
+                    if ($row[0] === $name) {
+                        // 同じ月・名前のデータを更新
+                        $updatedData[] = $newData;
+                        $isUpdated = true;
+                    } else {
+                        $updatedData[] = $row; // 既存の他のデータはそのまま
+                    }
+                }
+                fclose($file);
+            }
+
+            // 同じ名前のデータがない場合は新規追加
+            if (!$isUpdated) {
+                $updatedData[] = $newData;
+            }
+
+            // 更新後のデータを再度書き込み
+            $file = fopen($filename, 'w'); // 'w'で既存データをリセット
+            foreach ($updatedData as $row) {
+                fputcsv($file, $row);
+            }
             fclose($file);
 
-            echo "<p class='success'>ファイル '{$filename}' に保存しました。</p>";
+            if ($isUpdated) {
+                echo "<p class='success'>既存のデータを更新しました。</p>";
+            } else {
+                echo "<p class='success'>新しいデータを追加しました。</p>";
+            }
         }
     }
     ?>
