@@ -34,24 +34,30 @@ if (($handle = fopen($file, 'r')) !== false) {
             <?php foreach ($data as $rowIndex => $row):
                 echo "<tr>";
                     foreach ($row as $colIndex => $col) {
-                        if ($rowIndex > 0 && $colIndex > 0) { // 1行目と役職列以外を編集可能
+                        if ($rowIndex > 0) { // 1行目以外を編集可能
                             echo "<td>";
-                            echo "<select name='data[$rowIndex][$colIndex]'>";
-                            $options = [
-                                "イ", "ロ", "ハ", "ニ", "ホ", "ヘ", "ト", "チ", "A", "B", "C", "D",
-                                "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "P", "Q", "R",
-                                "S", "T", "U", "W", "Y", "Z", "育短915", "ハ短", "公休", "特殊休暇",
-                                "出張", "リフレッシュ休暇", "慰労休暇", "看護休暇", "介護休暇",
-                                "年休", "産休", "育児休業", "疾病休職", "宿直", "半宿直"
-                            ];
-                            foreach ($options as $option) {
-                                $selected = ($col == $option) ? "selected" : "";
-                                echo "<option value='$option' $selected>$option</option>";
+                            // 役職列（1列目）はテキストボックスで表示（readonly）
+                            if ($colIndex == 0) {
+                                echo "<input type='text' name='data[$rowIndex][$colIndex]' value='" . htmlspecialchars($col) . "' readonly>";
+                            } else {
+                                // その他の列はselectボックスとして表示
+                                echo "<select name='data[$rowIndex][$colIndex]'>";
+                                $options = [
+                                    "イ", "ロ", "ハ", "ニ", "ホ", "ヘ", "ト", "チ", "A", "B", "C", "D",
+                                    "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "P", "Q", "R",
+                                    "S", "T", "U", "W", "Y", "Z", "育短915", "ハ短", "公休", "特殊休暇",
+                                    "出張", "リフレッシュ休暇", "慰労休暇", "看護休暇", "介護休暇",
+                                    "年休", "産休", "育児休業", "疾病休職", "宿直", "半宿直"
+                                ];
+                                foreach ($options as $option) {
+                                    $selected = ($col == $option) ? "selected" : "";
+                                    echo "<option value='$option' $selected>$option</option>";
+                                }
+                                echo "</select>";
                             }
-                            echo "</select>";
                             echo "</td>";
                         } else {
-                            echo "<td>$col</td>";
+                            echo "<td>$col</td>"; // 1行目（ヘッダー行）は編集不可
                         }
                     }
                     echo "</tr>";
