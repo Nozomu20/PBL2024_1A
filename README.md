@@ -1,10 +1,10 @@
 ## 説明
 
-home.phpが通常ユーザーの画面
+・home.phpが通常ユーザーの画面
 
 http://nono1224.starfree.jp/pbl2/home.php
 
-home_admin.phpが管理者用画面
+・home_admin.phpが管理者用画面
 
 http://nono1224.starfree.jp/pbl2/home_admin.php
 
