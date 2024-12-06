@@ -1,26 +1,23 @@
 <?php
 session_start(); // セッションを開始
 
-/*
 // セッションに'role'が保存されているかを確認
-if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+if (isset($_SESSION['position']) && $_SESSION['position'] === 'admin') {
     // 'admin'の場合はページを表示
-    // セッションに'employee_id'が保存されているかを確認
-    if (isset($_SESSION['employee_id'])) {
-        // セッションに保存されているemployee_idを使用
-        $employee_id = $_SESSION['employee_id'];    
+    // セッションに'employeenumber'が保存されているかを確認
+    if (isset($_SESSION['employeenumber'])) {
+        // セッションに保存されているemployeenumberを使用
+        $admin_employeenumber = $_SESSION['employeenumber'];    
     } else {
-        // employee_idがない場合の処理
+        // employeenumberがない場合の処理
         header('Location: error.php?source=account_edit');
         exit;
     }
-
 } else {
     // 'admin'でない場合、user_error.phpにリダイレクト
     header('Location: user_error.php');
     exit; // リダイレクト後に処理を停止
 }
-*/
 ?>
 
 <?php
@@ -35,40 +32,30 @@ try {
     // POSTリクエストのチェック
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // ユーザーの入力データを取得
-        $employee_id = $_POST['employee_id'];
+        $employeenumber = $_POST['employeenumber'];
         $admin_password = $_POST['admin_password_delete'];
 
-        /*
         // データベースから管理者パスワードを取得する処理
         $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $dbpassword);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "SELECT password FROM user_data WHERE employee_id = 1";  // 仮のID、適切な条件に変更
+
+        // 管理者のパスワードを取得
+        $sql = "SELECT password FROM members WHERE employeenumber = :admin_employeenumber";
         $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':admin_employeenumber', $admin_employeenumber, PDO::PARAM_INT);
         $stmt->execute();
         $admin_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($admin_password !== $admin_data['password']) {
-            echo "管理者パスワードが間違っています。";
+        if (!$admin_data || !password_verify($admin_password, $admin_data['password'])) {
+            // 管理者パスワードが間違っている場合
             header('Location: error.php?source=account_edit');
             exit();
         }
-        */
-
-        // 管理者パスワードの確認
-        if ($admin_password !== $test_admin_password) {
-            // 管理者パスワードが間違っている場合
-            echo "管理者パスワードが間違っています。";
-            header('Location: error.php?source=account_edit');
-        }
-
-        // データベース接続
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $dbpassword);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // ユーザーアカウントの削除
-        $sql = "DELETE FROM user_data WHERE employee_id = :employee_id";
+        $sql = "DELETE FROM members WHERE employeenumber = :employeenumber";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':employee_id', $employee_id);
+        $stmt->bindParam(':employeenumber', $employeenumber, PDO::PARAM_INT);
         $stmt->execute();
 
         // 削除が成功した場合、成功ページへリダイレクト

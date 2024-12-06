@@ -2,8 +2,8 @@
 // メッセージ表示の処理
 $source = isset($_GET['source']) ? $_GET['source'] : '';
 $name = isset($_GET['name']) ? htmlspecialchars($_GET['name'], ENT_QUOTES, 'UTF-8') : '';
-$employee_id = isset($_GET['employee_id']) ? htmlspecialchars($_GET['employee_id'], ENT_QUOTES, 'UTF-8') : '';
-$role = isset($_GET['role']) ? htmlspecialchars($_GET['role'], ENT_QUOTES, 'UTF-8') : '';
+$employeenumber = isset($_GET['employeenumber']) ? htmlspecialchars($_GET['employeenumber'], ENT_QUOTES, 'UTF-8') : '';
+$position = isset($_GET['position']) ? htmlspecialchars($_GET['position'], ENT_QUOTES, 'UTF-8') : '';
 ?>
 
 <?php
@@ -28,8 +28,8 @@ session_start(); // セッションを開始
                     echo "<p>アカウント情報:</p>";
                     echo "<ul>";
                     echo "<li><strong>名前:</strong> $name</li>";
-                    echo "<li><strong>社員番号:</strong> $employee_id</li>";
-                    echo "<li><strong>役職:</strong> $role</li>";
+                    echo "<li><strong>社員番号:</strong> $employeenumber</li>";
+                    echo "<li><strong>役職:</strong> $position</li>";
                     echo "</ul>";
                     break;
                 case 'account_edit':

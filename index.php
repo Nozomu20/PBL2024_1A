@@ -1,3 +1,5 @@
+<!--仮のページです-->
+
 <?php
 session_start(); // セッションを開始
 ?>
@@ -95,8 +97,7 @@ session_start(); // セッションを開始
             <button type="submit">アカウント修正ページ</button>
         </form>
 
-        <h2>ユーザー
-            側</h2>
+        <h2>ユーザー側</h2>
 
         <!-- ボタン3: ユーザー用（自分のアカウント修正ページへ）-->
         <form action="account_user_edit_page.php" method="get">

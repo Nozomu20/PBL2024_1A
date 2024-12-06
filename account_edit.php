@@ -1,28 +1,24 @@
 <?php
 session_start(); // セッションを開始
 
-/*
-// セッションに'role'が保存されているかを確認
-if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+// セッションに'position'が保存されているかを確認
+if (isset($_SESSION['position']) && $_SESSION['position'] === 'admin') {
     // 'admin'の場合はページを表示
-    // セッションに'employee_id'が保存されているかを確認
-    if (isset($_SESSION['employee_id'])) {
-        // セッションに保存されているemployee_idを使用
-        $employee_id = $_SESSION['employee_id'];    
+    // セッションに'employeenumber'が保存されているかを確認
+    if (isset($_SESSION['employeenumber'])) {
+        // セッションに保存されているemployeenumberを使用
+        $ad_employeenumber = $_SESSION['employeenumber'];    
     } else {
-        // employee_idがない場合の処理
+        // employeenumberがない場合の処理
         header('Location: error.php?source=account_edit');
         exit;
     }
-
 } else {
     // 'admin'でない場合、user_error.phpにリダイレクト
     header('Location: user_error.php');
     exit; // リダイレクト後に処理を停止
 }
-*/
 ?>
-
 
 <?php
 // データベース接続情報
@@ -36,33 +32,29 @@ try {
     // POSTリクエストのチェック
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // ユーザーの入力データを取得
-        $employee_id = $_POST['employee_id'];
+        $employeenumber = $_POST['employeenumber'];
         $name = $_POST['name'];
         $password = $_POST['password'];
-        $role = $_POST['role'];
+        $position = $_POST['position'];
         $admin_password = $_POST['admin_password'];
 
-        /*
         // データベースから管理者パスワードを取得する処理
         $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $dbpassword);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "SELECT password FROM user_data WHERE employee_id = 1";  // 仮のID、適切な条件に変更
+        $sql = "SELECT password FROM members WHERE employeenumber = $ad_employeenumber";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $admin_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($admin_password !== $admin_data['password']) {
-            echo "管理者パスワードが間違っています。";
+        if (!$admin_data) {
+            // 該当する管理者が見つからない場合
             header('Location: error.php?source=account_edit');
             exit();
         }
-        */
 
-        // 管理者パスワードの確認
-        if ($admin_password !== $test_admin_password ) { //check_admin_password
-            // 管理者パスワードが間違っている場合
-            echo "管理者パスワードが間違っています。";
-            header('Location: error.php?source=account_edit');
+        if (!password_verify($admin_password, $admin_data['password'])) {
+            header('Location: error.php?source=account_edit_pass');
+            exit();
         }
 
         // 新しいパスワードをハッシュ化（もし入力されていた場合）
@@ -78,19 +70,19 @@ try {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // ユーザー情報の更新
-        $sql = "UPDATE user_data SET name = :name, role = :role";
+        $sql = "UPDATE members SET name = :name, position = :position";
         if ($hashed_password) {
             $sql .= ", password = :password";
         }
-        $sql .= " WHERE employee_id = :employee_id";
+        $sql .= " WHERE employeenumber = :employeenumber";
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':role', $role);
+        $stmt->bindParam(':position', $position);
         if ($hashed_password) {
             $stmt->bindParam(':password', $hashed_password);
         }
-        $stmt->bindParam(':employee_id', $employee_id);
+        $stmt->bindParam(':employeenumber', $employeenumber);
         $stmt->execute();
 
         // 編集が成功した場合、成功ページへリダイレクト

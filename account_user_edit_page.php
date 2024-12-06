@@ -1,4 +1,4 @@
-<!-- account_user_edit.html -->
+<!--仮のページです-->
 
 <?php
 session_start(); // セッションを開始
