@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シフト管理システム</title>
+    <link rel="stylesheet" type="text/css" href="./info.css" />
+</head>
+<body>
+    <div class="header">
+        <h1>愛媛新聞社 シフト管理システム</h1>
+    </div>
+    <h2>お知らせ入力</h2>
+    <form action="checkinput.html" method="POST">
+        <div class="title">
+            <p>・件名</p>
+            <input type="text" name="inptname" size="90">
+        </div>
+        <div class="title">
+            <p>・配信日時</p>
+            <label for="date">投稿日付：</label>
+            <input type="date" id="date" name="投稿日付" value="" /><br>
+            <label for="time">投稿時刻：</label>
+            <input type="time" id="time" name="投稿時刻" value="" />
+        </div>
+    </form>
+    <div class="button">
+        <button onclick="location.href='./home.html'">戻る</button>
+        <button onclick="location.href='./checkinput.html'">確認</button>
+    </div>
+</body>
+</html>

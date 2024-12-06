@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シフト管理システム</title>
+    <link rel="stylesheet" type="text/css" href="./info.css" />
+</head>
+<body>
+    <div class="header">
+        <h1>愛媛新聞社 シフト管理システム</h1>
+    </div>
+    <h2>お知らせ編集</h2>
+    <div class="title">
+        <p>・編集するお知らせ</p>
+        <form action="checkinput.html" method="POST">
+            <select name="info">
+                <option value="">件名選択</option>
+                <option value="red">赤</option>
+                <option value="blue">青</option>
+                <option value="yellow">黄</option>
+            </select>
+        </div>
+        <div class="title">
+        <p>・編集内容</p>
+        <input type="text" name="editname" size="90">
+        </div>
+    </form>
+        <div class="button">
+            <button onclick="location.href='./home.html'">戻る</button>
+            <button onclick="location.href='./checkedit.html'">確認</button>
+        </div>
+</body>
+</html>
