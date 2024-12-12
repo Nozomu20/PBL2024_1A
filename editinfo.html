@@ -11,24 +11,59 @@
         <h1>愛媛新聞社 シフト管理システム</h1>
     </div>
     <h2>お知らせ編集</h2>
-    <div class="title">
-        <p>・編集するお知らせ</p>
-        <form action="checkinput.html" method="POST">
-            <select name="info">
-                <option value="">件名選択</option>
-                <option value="red">赤</option>
-                <option value="blue">青</option>
-                <option value="yellow">黄</option>
-            </select>
+        <!-- 入力画面 -->
+        <div id="input-screen">
+            <h2>入力画面</h2>
+            <form id="input-form">
+                <label for="name">編集する件名:</label><br>
+                <input type="text" id="name" name="name" size="90" required><br><br>
+                <label for="name">編集内容:</label><br>
+                <input type="text" id="editname" name="editname" size="90" required><br><br>
+
+                 <button onclick="location.href='./home.html'">戻る</button>
+                 <button type="button" class="button" onclick="showConfirmation()">確認画面へ</button>
+            </form>
         </div>
-        <div class="title">
-        <p>・編集内容</p>
-        <input type="text" name="editname" size="90">
+
+        <!-- 確認画面 -->
+        <div id="confirmation-screen" class="hidden">
+            <h2>確認画面</h2>
+            <p><strong>編集する件名:</strong> <span id="confirm-name"></span></p>
+            <p><strong>編集内容:</strong> <span id="confirm-editname"></span></p>
+
+            <button class="button" onclick="goBack()">戻る</button>
+            <button class="button" onclick="submitForm()">送信</button>
         </div>
-    </form>
-        <div class="button">
-            <button onclick="location.href='./home.html'">戻る</button>
-            <button onclick="location.href='./checkedit.html'">確認</button>
-        </div>
+
+    <script>
+        // 入力画面から確認画面に切り替える
+        function showConfirmation() {
+            const name = document.getElementById('name').value;
+            const editname = document.getElementById('editname').value;
+
+            if (name && editname) {
+                document.getElementById('confirm-name').textContent = name;
+                document.getElementById('confirm-editname').textContent = editname;
+
+
+                document.getElementById('input-screen').classList.add('hidden');
+                document.getElementById('confirmation-screen').classList.remove('hidden');
+            } else {
+                alert('すべての項目を入力してください。');
+            }
+        }
+
+        // 確認画面から入力画面に戻る
+        function goBack() {
+            document.getElementById('confirmation-screen').classList.add('hidden');
+            document.getElementById('input-screen').classList.remove('hidden');
+        }
+
+        // フォームを送信する（ここではダミーのアクション）
+        function submitForm() {
+            alert('フォームを送信しました！');
+            // 実際の送信処理を追加する場合は以下にコードを記述
+        }
+    </script>
 </body>
 </html>

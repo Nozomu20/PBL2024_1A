@@ -11,22 +11,64 @@
         <h1>愛媛新聞社 シフト管理システム</h1>
     </div>
     <h2>お知らせ入力</h2>
-    <form action="checkinput.html" method="POST">
-        <div class="title">
-            <p>・件名</p>
-            <input type="text" name="inptname" size="90">
+        <!-- 入力画面 -->
+        <div id="input-screen">
+            <h2>入力画面</h2>
+            <form id="input-form">
+                <label for="name">件名:</label><br>
+                <input type="text" id="name" name="name" size="90" required><br><br>
+                <label for="date">投稿日付：</label>
+                 <input type="date" id="date" name="投稿日付" value="" required/><br>
+                 <label for="time">投稿時刻：</label>
+                 <input type="time" id="time" name="投稿時刻" value="" required/><br>
+
+                 <button onclick="location.href='./home.html'">戻る</button>
+                 <button type="button" class="button" onclick="showConfirmation()">確認画面へ</button>
+            </form>
         </div>
-        <div class="title">
-            <p>・配信日時</p>
-            <label for="date">投稿日付：</label>
-            <input type="date" id="date" name="投稿日付" value="" /><br>
-            <label for="time">投稿時刻：</label>
-            <input type="time" id="time" name="投稿時刻" value="" />
+
+        <!-- 確認画面 -->
+        <div id="confirmation-screen" class="hidden">
+            <h2>確認画面</h2>
+            <p><strong>件名:</strong> <span id="confirm-name"></span></p>
+            <p><strong>投稿日付:</strong> <span id="confirm-date"></span></p>
+            <p><strong>投稿時刻:</strong> <span id="confirm-time"></span></p>
+
+            <button class="button" onclick="goBack()">戻る</button>
+            <button class="button" onclick="submitForm()">送信</button>
         </div>
-    </form>
-    <div class="button">
-        <button onclick="location.href='./home.html'">戻る</button>
-        <button onclick="location.href='./checkinput.html'">確認</button>
-    </div>
+
+    <script>
+        // 入力画面から確認画面に切り替える
+        function showConfirmation() {
+            const name = document.getElementById('name').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+
+            if (name && date && time) {
+                document.getElementById('confirm-name').textContent = name;
+                document.getElementById('confirm-date').textContent = date;
+                document.getElementById('confirm-time').textContent = time;
+
+
+                document.getElementById('input-screen').classList.add('hidden');
+                document.getElementById('confirmation-screen').classList.remove('hidden');
+            } else {
+                alert('すべての項目を入力してください。');
+            }
+        }
+
+        // 確認画面から入力画面に戻る
+        function goBack() {
+            document.getElementById('confirmation-screen').classList.add('hidden');
+            document.getElementById('input-screen').classList.remove('hidden');
+        }
+
+        // フォームを送信する（ここではダミーのアクション）
+        function submitForm() {
+            alert('フォームを送信しました！');
+            // 実際の送信処理を追加する場合は以下にコードを記述
+        }
+    </script>
 </body>
 </html>
