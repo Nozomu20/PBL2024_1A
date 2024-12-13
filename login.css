@@ -26,3 +26,7 @@
     background-color: #ffa07a;
     border-radius: 30px;
 }
+
+.button:hover {
+    background-color: #ff885a;
+}
