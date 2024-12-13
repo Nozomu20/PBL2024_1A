@@ -37,3 +37,7 @@
     font-size: 24px;
     font-weight: bold
 }
+
+.button:hover {
+    background-color: #ff885a;
+}
