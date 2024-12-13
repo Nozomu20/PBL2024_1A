@@ -1,53 +1,63 @@
 <?php
+    ini_set('display_errors', "On");
 
-try
-{
-    $staff_code=$_POST['code'];
-    $staff_pass=$_POST['pass'];
+    try {
+        // POSTデータを取得
+        $employeenumber = $_POST['employeenumber'];
+        $pass = $_POST['pass'];
 
-    $staff_code=htmlspecialchars($staff_code,ENT_QUOTES,'UTF-8');
-    $staff_pass=htmlspecialchars($staff_pass,ENT_QUOTES,'UTF-8');
-    
-    $staff_pass=md5($staff_pass);
+        // HTMLエスケープ処理
+        $employeenumber = htmlspecialchars($employeenumber, ENT_QUOTES, 'UTF-8');
+        $pass = htmlspecialchars($pass, ENT_QUOTES, 'UTF-8');
+        
+        // パスワードのハッシュ化（必要に応じて利用）
+        //$pass = md5($pass);
 
-    $dsn='mysql:dbname=pbl;host=localhost;charset=utf8';
-    $user='root';
-    $password='';
-    $dbh=new PDO($dsn,$user,$password);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        // データベース接続情報
+        $dsn = 'mysql:dbname=j024ishi4;host=localhost;charset=utf8';
+        $user = 'j024ishi';
+        $password = '';
+        $dbh = new PDO($dsn, $user, $password);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql='SELECT name FROM pbl_staff WHERE code=? AND password=?';
-    $stmt=$dbh->prepare($sql);
-    $data[]=$staff_code;
-    $data[]=$staff_pass;
-    $stmt->execute($data);
+        // SQLクエリ準備（`position`カラムはログインに利用しないので取得しない）
+        $sql = 'SELECT name, position FROM members WHERE employeenumber=? AND password=?';
+        $stmt = $dbh->prepare($sql);
 
-    $dbh=null;
+        // バインドするデータを配列に格納
+        $data[] = $employeenumber;
+        $data[] = $pass;
 
-    $rec=$stmt->fetch(PDO::FETCH_ASSOC);
+        // SQL実行
+        $stmt->execute($data);
 
-    if($rec==false)
-    {
-        print 'スタッフコードかパスワードが間違っています<br/>';
+        // データベース接続を閉じる
+        $dbh = null;
+
+        // 結果取得
+        $rec = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // 結果の判定
+        if ($rec == false) {
+            print 'スタッフコードかパスワードが間違っています<br/>';
+            print '<a href="staff_login.html">戻る</a>';
+        } else {
+            // セッション開始とデータ格納
+            session_start();
+            $_SESSION['login'] = 1;
+            $_SESSION['employeenumber'] = $employeenumber;
+            $_SESSION['name'] = $rec['name'];
+            $_SESSION['position'] = $rec['position'];
+            header('Location:staff_top.php');
+            exit();
+        }
+    } catch (PDOException $e) {
+        // データベース接続やSQL実行で発生したエラーをキャッチ
+        print 'データベースエラー: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8') . '<br/>';
+        print '<a href="staff_login.html">戻る</a>';
+    } catch (Exception $e) {
+        // その他のエラーをキャッチ
+        print 'エラーが発生しました: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8') . '<br/>';
         print '<a href="staff_login.html">戻る</a>';
     }
-    else
-    {
-        session_start();
-        $_SESSION['login']=1;
-        $_SESSION['staff_code']=$staff_code;
-        $_SESSION['staff_name']=$rec['name'];
-        header('Location:staff_top.php');
-        exit();
-    }
-}
-catch(Exception $e)
-{
-    print 'ただいま障害により大変ご迷惑をお掛けしております';
-    exit();
-}
-
 ?>
-
-</body>
-<html>
