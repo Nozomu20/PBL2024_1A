@@ -8,10 +8,11 @@
         // 月が変更されたときの日数生成
         function updateDays() {
             const month = document.getElementById("month").value;
-            const daysInMonth = new Date(2024, month, 0).getDate(); // 月の最終日取得
+            const daysInMonth = new Date(2024, month, 0).getDate();  // 月の最終日取得
             const daysContainer = document.getElementById("days");
-            daysContainer.innerHTML = ''; // 前の内容をクリア
+            daysContainer.innerHTML = '';  // 前の内容をクリア
 
+            // 日数分のチェックボックスを動的生成
             for (let i = 1; i <= daysInMonth; i++) {
                 const checkbox = document.createElement("input");
                 checkbox.type = "checkbox";
@@ -38,7 +39,7 @@
             }
         }
 
-        window.onload = updateDays; // ページ読み込み時に初期化
+        window.onload = updateDays;  // ページ読み込み時に初期化
     </script>
 </head>
 <body>
@@ -55,7 +56,7 @@
         </select><br><br>
 
         <div id="days"></div>
-
+        
         <button type="submit">CSV出力</button>
     </form>
 
@@ -72,42 +73,40 @@
         } elseif (empty($selectedDays)) {
             echo "<p class='error'>休み希望日を選択してください。</p>";
         } else {
-            $filename = "req{$month}.csv"; // 月ごとのCSVファイル
+            $filename = "req.csv"; // データを保存するCSVファイル
             $updatedData = [];
-            $newData = [$name, implode(", ", $selectedDays)];
+            $newData = [$name, $month, implode(", ", $selectedDays)];
             $isUpdated = false;
 
-            // ファイルが存在する場合、既存データを読み込み
+            // CSVファイルが存在する場合、既存データを読み込み
             if (file_exists($filename)) {
                 $file = fopen($filename, 'r');
                 while (($row = fgetcsv($file)) !== false) {
-                    if ($row[0] === $name) {
-                        // 同じ月・名前のデータを更新
-                        $updatedData[] = $newData;
+                    // 名前と月が一致する場合は更新
+                    if ($row[0] === $name && (int)$row[1] === $month) {
                         $isUpdated = true;
                     } else {
-                        $updatedData[] = $row; // 既存の他のデータはそのまま
+                        $updatedData[] = $row; // 他のデータはそのまま保持
                     }
                 }
                 fclose($file);
             }
 
-            // 同じ名前のデータがない場合は新規追加
-            if (!$isUpdated) {
-                $updatedData[] = $newData;
-            }
+            // 新しいデータを追加
+            $updatedData[] = $newData;
 
-            // 更新後のデータを再度書き込み
-            $file = fopen($filename, 'w'); // 'w'で既存データをリセット
+            // 更新後のデータをCSVに書き込み
+            $file = fopen($filename, 'w');
             foreach ($updatedData as $row) {
                 fputcsv($file, $row);
             }
             fclose($file);
 
+            // メッセージを表示
             if ($isUpdated) {
                 echo "<p class='success'>既存のデータを更新しました。</p>";
             } else {
-                echo "<p class='success'>新しいデータを追加しました。</p>";
+                echo "<p class='success'>新しいデータを保存しました。</p>";
             }
         }
     }
