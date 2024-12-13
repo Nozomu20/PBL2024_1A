@@ -9,7 +9,7 @@ if(isset($_SESSION['login'])==false)
 }
 else
 {
-    print $_SESSION['staff_name'];
+    print $_SESSION['name'];
     print 'さんログイン中<br/>';
     print '<br/>';
 }
@@ -24,7 +24,7 @@ else
 <body>
 
 スタッフが選択されていません<br/>
-<a href="staff_list.php">戻る</a>
+<input type="button" onclick="history.back()" value="戻る">
 
 </body>
 <html>
