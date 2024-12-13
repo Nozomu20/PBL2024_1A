@@ -43,10 +43,22 @@
     </script>
 </head>
 <body>
+    <?php
+    session_start();
+
+    // セッションチェック
+    if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
+        header('Location: master_login.php');
+        exit();
+    }
+
+    // ログインユーザーの名前を取得
+    $userName = htmlspecialchars($_SESSION['name'], ENT_QUOTES, 'UTF-8');
+    ?>
+
     <h1>シフト希望入力フォーム</h1>
     <form action="inputshift.php" method="post">
-        <label for="name">名前：</label>
-        <input type="text" id="name" name="name" required placeholder="例: 山田 太郎"><br><br>
+        <p>ログインユーザー: <strong><?php echo $userName; ?></strong></p>
 
         <label for="month">月を選択：</label>
         <select id="month" name="month" onchange="updateDays()">
@@ -63,7 +75,6 @@
     <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 入力データの受け取り
-        $name = htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8'); // XSS防止
         $month = (int)$_POST['month'];
         $selectedDays = $_POST['days'] ?? [];
 
@@ -75,7 +86,7 @@
         } else {
             $filename = "req.csv"; // データを保存するCSVファイル
             $updatedData = [];
-            $newData = [$name, $month, implode(", ", $selectedDays)];
+            $newData = [$userName, $month, implode(", ", $selectedDays)];
             $isUpdated = false;
 
             // CSVファイルが存在する場合、既存データを読み込み
@@ -83,7 +94,7 @@
                 $file = fopen($filename, 'r');
                 while (($row = fgetcsv($file)) !== false) {
                     // 名前と月が一致する場合は更新
-                    if ($row[0] === $name && (int)$row[1] === $month) {
+                    if ($row[0] === $userName && (int)$row[1] === $month) {
                         $isUpdated = true;
                     } else {
                         $updatedData[] = $row; // 他のデータはそのまま保持
