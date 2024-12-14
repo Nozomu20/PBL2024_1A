@@ -18,4 +18,4 @@
   ・success.php：各ページでの処理が成功したときに遷移するページ<br>
 
 * 遷移図<br>
-![Image 1](image/遷移図.png)
+![Image 1](遷移図.png)
