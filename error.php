@@ -61,7 +61,7 @@ session_start(); // セッションを開始
                 echo '<a href="account_search_page.php"><button>アカウント修正ページに戻る</button></a>';
                 break;
             default:
-                echo '<a href="index.php"><button>ホームに戻る</button></a>';
+                echo '<a href="config.php"><button>設定画面に戻る</button></a>';
         }
     ?>
 </body>

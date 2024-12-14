@@ -47,6 +47,6 @@ if (isset($_SESSION['position']) && $_SESSION['position'] === 'admin') {
     </form>
 
     <br>
-    <a href="index.php">ホームに戻る</a>
+    <a href="config.php">ホームに戻る</a>
 </body>
 </html>

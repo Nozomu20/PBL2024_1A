@@ -48,6 +48,6 @@ session_start(); // セッションを開始
     </p>
 
     <!-- ホームに戻るボタン -->
-    <a href="index.php"><button>ホームに戻る</button></a>
+    <a href="config.php"><button>設定画面に戻る</button></a>
 </body>
 </html>

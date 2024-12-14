@@ -15,7 +15,7 @@ session_start(); // セッションを開始
     <p>管理者権限がないため、アクセスできません。</p>
 
     <!-- index.phpに遷移するボタン -->
-    <form action="index.php" method="get">
+    <form action="config.php" method="get">
         <button type="submit">トップページに戻る</button>
     </form>
 

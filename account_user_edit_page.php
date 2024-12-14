@@ -1,4 +1,5 @@
 <!--仮のページです-->
+<!--user_config.phpに変更-->
 
 <?php
 session_start(); // セッションを開始
@@ -31,7 +32,7 @@ session_start(); // セッションを開始
     </form>
 
     <br>
-    <a href="index.php"><button>ホームに戻る</button></a>
+    <a href="config.php"><button>ホームに戻る</button></a>
 </body>
 
 </html>

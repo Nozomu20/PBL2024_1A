@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['position'] = $position;
 
     // index.php へリダイレクト
-    header('Location: index.php');
+    header('Location: config.php');
     exit;
 }
 ?>

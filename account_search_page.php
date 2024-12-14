@@ -37,26 +37,105 @@ if (isset($_SESSION['position']) && $_SESSION['position'] === 'admin') {
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+
+    <style>
+    .result{
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .spacer {
+      height: 15px; /* 好きな高さに調整 */
+    }
+
+    #head {
+        width: 100%;
+        height: 60px;
+        display: flex; /* 子要素を水平に配置 */
+        align-items: center; /* 子要素を垂直中央に配置 */
+        padding-left: 10px; /* 左寄せ時の余白を追加 */
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 23px;
+        font-weight: bold; /* 文字を太くする */
+        background-color: #fbb89c;
+        box-sizing: border-box; /* パディングを含むボックスサイズ計算 */
+    }
+
+    #head a {
+        text-decoration: none; /* 下線を消す */
+        color: inherit; /* 親の色を継承 */
+    }
+
+    .back_button {
+        font-size: 10px; /* 小さめのフォントサイズ */
+        padding: 5px 10px; /* ボタンの内側余白 */
+        background-color: #f0f0f0; /* 質素な背景色 */
+        color: #333; /* 落ち着いた文字色 */
+        border: 1px solid #ccc; /* 控えめな枠線 */
+        border-radius: 4px; /* 角を少し丸める */
+        cursor: pointer; /* マウスオーバー時にポインタ表示 */
+        text-align: center; /* テキスト中央揃え */
+        display: inline-block; /* インラインブロック要素 */
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* 控えめな影 */
+        transition: background-color 0.3s ease; /* ホバー時の変化を滑らかに */
+    }
+
+    .back_button:hover {
+        background-color: #e0e0e0; /* ホバー時に少し暗くなる */
+    }
+
+    .title{
+        text-align: center;
+        font-family: sans-serif;
+    }
+
+    .form{
+        width: 60%;
+        margin: auto;
+        background-color: #b4eaff;
+    }
+
+    </style>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>アカウント検索</title>
 </head>
 <body>
-    <h1>アカウント検索</h1>
+    
+    <table id="head">
+        <tr>
+            <th>愛媛新聞社 シフト管理システム</th>
+        </tr>
+    </table>
 
+    
+    <div class="spacer"></div>
     <!-- ホームに戻るボタン -->
-    <a href="index.php"><button>ホームに戻る</button></a>
+    <a href="config.php"><button class="back_button">← ホームに戻る</button></a>
 
-    <p>編集または削除するアカウントを検索してください。</p>
+    <h2 class="title">編集するアカウントを検索</h2>
 
     <!-- 検索フォーム -->
-    <form action="account_search_page.php" method="POST">
-        <label for="employeenumber">社員番号:</label>
-        <input type="text" name="employeenumber" id="employeenumber" required>
-        <button type="submit" name="search" value="1">検索</button>
+    <form action="account_search_page.php" method="POST" class="form">
+        <table class="form">
+            <tr>
+                <th>社員番号</th>
+                <th>
+                    <input type="text" name="employeenumber" required>
+                    <button type="submit" name="search" value="1">検索</button>
+                </th>
+            </tr>
+        </table>    
     </form>
 
     <?php
+
+    // ページ更新時に社員番号をリセットし、検索結果を非表示にする
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        $_POST['employeenumber'] = null;
+    }
+
     // 検索結果表示部分
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['employeenumber'])) {
         // データベース接続情報
@@ -81,44 +160,54 @@ if (isset($_SESSION['position']) && $_SESSION['position'] === 'admin') {
 
             if ($user) {
                 // 社員情報が見つかった場合
-                echo "<h2>検索結果</h2>";
+                echo "<h2 class='title'>検索結果</h2>";
+                ?>
+                <div class="result">
+                <?php
                 echo "<p>社員番号: " . htmlspecialchars($user['employeenumber'], ENT_QUOTES, 'UTF-8') . "</p>";
                 echo "<p>名前: " . htmlspecialchars($user['name'], ENT_QUOTES, 'UTF-8') . "</p>";
                 echo "<p>役職: " . htmlspecialchars($user['position'], ENT_QUOTES, 'UTF-8') . "</p>";
-
-                // 編集フォーム
                 ?>
-                <h2>アカウント編集</h2>
+                </div>
+                
+                <h2 class="title">アカウント編集</h2>
                 <form action="account_edit.php" method="POST">
                     <input type="hidden" name="employeenumber" value="<?= htmlspecialchars($user['employeenumber'], ENT_QUOTES, 'UTF-8') ?>">
 
-                    <label for="name">名前:</label>
-                    <input type="text" name="name" id="name" value="<?= htmlspecialchars($user['name'], ENT_QUOTES, 'UTF-8') ?>" required><br>
+                    <table class="form">
+                    <tr>
+                    <th>名前</th>
+                    <th><input type="text" name="name" value="<?= htmlspecialchars($user['name'], ENT_QUOTES, 'UTF-8') ?>" required></th></tr>
 
-                    <label for="password">新しいパスワード:</label>
-                    <input type="password" name="password" id="password"><br>
+                    <tr><th>新しいパスワード</th>
+                    <th><input type="password" name="password"></th></tr>
 
-                    <label for="position">役職:</label>
-                    <select name="position" id="position">
+                    <tr><th>役職</th>
+                    <th>
+                    <select name="position">
                         <option value="admin" <?= ($user['position'] === 'admin') ? 'selected' : '' ?>>管理者</option>
                         <option value="user" <?= ($user['position'] === 'user') ? 'selected' : '' ?>>ユーザー</option>
-                    </select><br>
+                    </select>
+                    </th></tr>
 
-                    <label for="admin_password">管理者パスワード:</label>
-                    <input type="password" name="admin_password" id="admin_password" required><br>
+                    <tr><th>管理者パスワード</th>
+                    <th><input type="password" name="admin_password" required></th></tr>
 
-                    <button type="submit" name="edit" value="1">修正</button>
+                    <tr><th colspan="2"><button type="submit" name="edit" value="1">修正</button></tr>
+                </table>
                 </form>
 
                 <br>
 
                 <!-- 削除フォーム -->
-                <h2>アカウント削除</h2>
+                <h2 class="title"> アカウント削除</h2>
                 <form action="account_delete.php" method="POST">
                     <input type="hidden" name="employeenumber" value="<?= htmlspecialchars($user['employeenumber'], ENT_QUOTES, 'UTF-8') ?>">
-                    <label for="admin_password_delete">管理者パスワード:</label>
-                    <input type="password" name="admin_password_delete" id="admin_password_delete" required><br>
-                    <button type="submit" name="delete" value="1">削除</button>
+                    <table class="form">
+                    <tr><th>管理者パスワード</th>
+                    <th><input type="password" name="admin_password_delete" required></th>
+                    <tr><th colspan="2"><button type="submit" name="delete" value="1">削除</button></th></tr>
+                </table>
                 </form>
                 <?php
             } else {
