@@ -16,3 +16,6 @@
   ・user_error.php：管理者でないユーザーが管理者用ページに遷移しようとしたときに遷移するページ<br>
   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;なぜerror.phpと分けたのかは不明<br>
   ・success.php：各ページでの処理が成功したときに遷移するページ<br>
+
+* 遷移図<br>
+![Image 1](image/遷移図.png)
