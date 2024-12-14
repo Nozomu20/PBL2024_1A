@@ -1,5 +1,5 @@
 # PBL2024_1A
-使用可能なファイル
+使用可能なファイル<br>
 staff_login.html:ログインページ
 staff_login_check.php:ログイン時に入力された社員番号とパスワードをチェックする
 staff_top.php:ログイン成功時に遷移するページ
