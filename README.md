@@ -32,8 +32,8 @@ INSERT INTO members (employeenumber, name, password, position, created) VALUES
 長町悟志(j317naga)
 
 ・inputinfo.html
-お知らせの入力と確認を行う画面です。
+お知らせの入力と確認を行う画面です。  
 ・editinfo.html
-お知らせの編集と確認を行う画面です。
+お知らせの編集と確認を行う画面です。  
 ・info.css
-inputinfo.htmlとeditinfo.htmlのスタイルを変更するcssファイルです。
+inputinfo.htmlとeditinfo.htmlのスタイルを変更するcssファイルです。  
