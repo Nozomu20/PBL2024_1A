@@ -29,8 +29,7 @@ INSERT INTO members (employeenumber, name, password, position, created) VALUES
 役職 user(一般社員)  
 ーーーーーーーーー
 
-長町悟志(j317naga)
-
+長町悟志(j317naga)  
 ・inputinfo.html
 お知らせの入力と確認を行う画面です。  
 ・editinfo.html
