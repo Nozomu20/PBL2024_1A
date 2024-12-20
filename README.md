@@ -11,7 +11,7 @@
   ・account_search_page.php：管理者が編集又は削除するアカウントを検索、編集内容を入力するページ<br>
   ・account_edit.php：管理者側からアカウント情報を編集する機能<br>
   ・account_delete.php：アカウントを削除する機能<br><br>
-  ・account_user_edit.php：管理者側からアカウント情報を編集する機能<br><br>
+  ・account_user_edit.php：ユーザー側からアカウント情報を編集する機能<br><br>
   ・error.php：各ページでエラーが発生したときに遷移するページ<br>
   ・user_error.php：管理者でないユーザーが管理者用ページに遷移しようとしたときに遷移するページ<br>
   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;なぜerror.phpと分けたのかは不明<br>
