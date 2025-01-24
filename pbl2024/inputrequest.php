@@ -8,8 +8,7 @@ if (!isset($_SESSION['name'])) {
     exit();
 }
 
-
-// ログインユーザーの名前を取得
+// ログインユーザーの情報を取得
 $name = $_SESSION['name'];
 $department = $_SESSION['department'];
 ?>
@@ -21,71 +20,65 @@ $department = $_SESSION['department'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./home.css" />
     <title>シフト希望入力</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            text-align: center;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .day-cell {
+            width: 14%;
+        }
+    </style>
     <script>
-        // 月が変更されたときにカレンダーを更新
         function updateDays() {
-            const month = parseInt(document.getElementById("month").value);
-            const year = parseInt(document.getElementById("year").value);
-            const daysInMonth = new Date(year, month, 0).getDate(); // 月の最終日取得
-            const firstDay = new Date(year, month - 1, 1).getDay(); // 月初の曜日 (0:日曜日)
-            const daysContainer = document.getElementById("days");
-            daysContainer.innerHTML = ''; // 既存の内容をクリア
+            const year = document.getElementById("year").value;
+            const month = document.getElementById("month").value - 1;
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-            // テーブル作成
-            const table = document.createElement('table');
-            table.classList.add('calendar');
+            const calendar = document.getElementById("calendar-body");
+            calendar.innerHTML = "";
 
-            // 曜日ヘッダーを作成
-            const daysOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
-            const headerRow = document.createElement('tr');
-            daysOfWeek.forEach(day => {
-                const th = document.createElement('th');
-                th.textContent = day;
-                headerRow.appendChild(th);
-            });
-            table.appendChild(headerRow);
+            let row = document.createElement("tr");
 
-            // 日付を埋める
-            let row = document.createElement('tr');
-            for (let i = 0; i < firstDay; i++) { // 空白のセルを追加
-                const emptyCell = document.createElement('td');
+            for (let i = 0; i < firstDay; i++) {
+                const emptyCell = document.createElement("td");
                 row.appendChild(emptyCell);
             }
 
             for (let day = 1; day <= daysInMonth; day++) {
-                if ((firstDay + day - 1) % 7 === 0 && day !== 1) { // 行の切り替え
-                    table.appendChild(row);
-                    row = document.createElement('tr');
-                }
+                const cell = document.createElement("td");
+                cell.className = "day-cell";
 
-                const cell = document.createElement('td');
-                const checkbox = document.createElement('input');
+                const checkbox = document.createElement("input");
                 checkbox.type = "checkbox";
                 checkbox.name = "days[]";
                 checkbox.value = day;
-                checkbox.id = `day${day}`;
                 checkbox.onclick = checkLimit;
 
-                const label = document.createElement('label');
-                label.htmlFor = `day${day}`;
-                label.textContent = day;
-
                 cell.appendChild(checkbox);
-                cell.appendChild(label);
+                cell.appendChild(document.createTextNode(day));
                 row.appendChild(cell);
+
+                if ((firstDay + day - 1) % 7 === 6) {
+                    calendar.appendChild(row);
+                    row = document.createElement("tr");
+                }
             }
 
-            // 残りのセルを空白で埋める
-            while (row.children.length < 7) {
-                const emptyCell = document.createElement('td');
-                row.appendChild(emptyCell);
+            if (row.children.length > 0) {
+                calendar.appendChild(row);
             }
-
-            table.appendChild(row);
-            daysContainer.appendChild(table);
         }
 
-        // 休み希望日の選択上限をチェック
         function checkLimit() {
             const checkboxes = document.querySelectorAll('input[name="days[]"]:checked');
             if (checkboxes.length > 7) {
@@ -94,29 +87,10 @@ $department = $_SESSION['department'];
             }
         }
 
-        window.onload = updateDays; // ページ読み込み時に初期化
+        window.onload = updateDays;
     </script>
-    <style>
-        .calendar {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        .calendar th, .calendar td {
-            border: 1px solid #ccc;
-            padding: 5px;
-            text-align: center;
-            width: 14.28%;
-        }
-        .calendar th {
-            background-color: #f4f4f4;
-        }
-        .calendar td {
-            height: 50px;
-        }
-    </style>
 </head>
 <body>
-
 <div class="header">
     <a href="./home.php"><h1>愛媛新聞社 シフト管理システム</h1></a>
 </div>
@@ -132,13 +106,13 @@ $department = $_SESSION['department'];
     <label for="year">年を選択：</label>
     <select id="year" name="year" onchange="updateDays()">
         <?php
-        $currentYear = date('Y'); // 現在の年を取得
-        $nextYear = $currentYear + 1; // 次の年を計算
+        $currentYear = date('Y');
+        $nextYear = $currentYear + 1;
         ?>
         <option value="<?= $currentYear ?>"><?= $currentYear ?>年</option>
         <option value="<?= $nextYear ?>"><?= $nextYear ?>年</option>
     </select><br><br>
-
+            
     <label for="month">月を選択：</label>
     <select id="month" name="month" onchange="updateDays()">
         <?php for ($i = 1; $i <= 12; $i++): ?>
@@ -146,10 +120,90 @@ $department = $_SESSION['department'];
         <?php endfor; ?>
     </select><br><br>
 
-    <div id="days"></div>
+    <table>
+        <thead>
+            <tr>
+                <th>日</th>
+                <th>月</th>
+                <th>火</th>
+                <th>水</th>
+                <th>木</th>
+                <th>金</th>
+                <th>土</th>
+            </tr>
+        </thead>
+        <tbody id="calendar-body"></tbody>
+    </table>
 
     <button type="submit">CSV出力</button>
 </form>
 
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $year = (int)$_POST['year'];
+    $month = (int)$_POST['month'];
+    $selectedDays = $_POST['days'] ?? [];
+
+    if (count($selectedDays) > 7) {
+        echo "<p class='error'>休み希望は7日までにしてください。</p>";
+    } elseif (empty($selectedDays)) {
+        echo "<p class='error'>休み希望日を選択してください。</p>";
+    } else {
+        $filename = './admin/data/req_' . $year . '_' . $month . '.csv';
+        $updatedData = [];
+        $newData = [$name, implode(", ", $selectedDays)];
+        $isUpdated = false;
+
+        $defaultData = [
+            ["名前", "希望日時"],
+            ["統括", ""],
+            ["副部長A", ""],
+            ["副部長B", ""],
+            ["副部長C", ""],
+            ["副部長D", ""],
+            ["部員A", ""],
+            ["部員B", ""],
+            ["部員C", ""],
+            ["臨時・派遣A", ""],
+            ["臨時・派遣B", ""],
+            ["臨時・派遣C", ""],
+        ];
+
+        if (!file_exists($filename)) {
+            $file = fopen($filename, 'w');
+            foreach ($defaultData as $row) {
+                fputcsv($file, $row);
+            }
+            fclose($file);
+        }
+
+        if (file_exists($filename)) {
+            $file = fopen($filename, 'r');
+            while (($row = fgetcsv($file)) !== false) {
+                if ($row[0] === $name) {
+                    $row[1] = implode(", ", $selectedDays);
+                    $isUpdated = true;
+                }
+                $updatedData[] = $row;
+            }
+            fclose($file);
+        }
+
+        if (!$isUpdated) {
+            $updatedData[] = $newData;
+        }
+
+        $file = fopen($filename, 'w');
+        foreach ($updatedData as $row) {
+            fputcsv($file, $row);
+        }
+        fclose($file);
+
+        echo $isUpdated 
+            ? "<p class='success'>既存のデータを更新しました。</p>" 
+            : "<p class='success'>新しいデータを保存しました。</p>";
+    }
+}
+?>
 </body>
 </html>
