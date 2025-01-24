@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>CSVファイルをアップロード</title>
+</head>
+<body>
+    <h1>CSVファイルをアップロード</h1>
+    <form action="upload_csv.php" method="post" enctype="multipart/form-data">
+        <label for="csv_file">CSVファイルを選択してください:</label><br>
+        <input type="file" name="csv_file" id="csv_file" accept=".csv" required>
+        <button type="submit">アップロードして編集する</button>
+    </form>
+</body>
+</html>

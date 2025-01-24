@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シフト管理システム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #F4CCCC;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+        .logout {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .logout button {
+            margin-top: 5px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .announcement {
+            margin-bottom: 20px;
+        }
+        .announcement table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .announcement th, .announcement td {
+            border: 1px solid #000;
+            text-align: left;
+            padding: 5px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .buttons button {
+            font-size: 18px;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>愛媛新聞社 シフト管理システム</h1>
+    </div>
+    <button>設定</button>
+    <div class="logout">
+        <span>〇〇 〇〇 さん</span>
+        <button>ログアウト</button>
+    </div>
+    <div class="content">
+        <div class="announcement">
+            <h2>お知らせ</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>件名</th>
+                        <th>配信日時</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="buttons">
+            <button>リクエスト提出</button>
+            <button>シフト表示</button>
+        </div>
+    </div>
+</body>
+</html>
