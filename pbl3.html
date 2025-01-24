@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シフト管理システム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            margin: 20px auto;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            background-color: #f7bca3;
+            padding: 10px 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .dropdown {
+            margin: 20px 0;
+        }
+        .dropdown select {
+            padding: 8px;
+            font-size: 16px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table th, .table td {
+            border: 1px solid #ccc;
+            text-align: center;
+            position: relative;
+            height: 60px;
+        }
+        .table th {
+            background-color: #f7bca3;
+            color: #fff;
+        }
+        .table td {
+            background-color: #e6e6e6;
+        }
+        .button-container {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            display: flex;
+            gap: 5px;
+        }
+        .add-button, .remove-button {
+            padding: 4px 8px;
+            font-size: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .add-button {
+            background-color: #d9f7d9;
+        }
+        .add-button:hover {
+            background-color: #b3e6b3;
+        }
+        .remove-button {
+            background-color: #f7d9d9;
+        }
+        .remove-button:hover {
+            background-color: #e6b3b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            愛媛新聞社 シフト管理システム
+        </div>
+        <div class="dropdown">
+            表示するシフト:
+            <select>
+                <option value="月">月</option>
+                <option value="火">火</option>
+                <option value="水">水</option>
+                <option value="木">木</option>
+                <option value="金">金</option>
+                <option value="土">土</option>
+                <option value="日">日</option>
+            </select>
+        </div>
+        <table class="table">
+            <tr>
+                <th></th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+            </tr>
+            <tr>
+                <th>A</th>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+            </tr>
+            <tr>
+                <th>B</th>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+            </tr>
+            <tr>
+                <th>C</th>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+            </tr>
+            <tr>
+                <th>D</th>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+            </tr>
+            <tr>
+                <th>E</th>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+            </tr>
+            <tr>
+                <th>F</th>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+            </tr>
+            <tr>
+                <th>G</th>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+                <td><div class="button-container"><button class="add-button">追加</button><button class="remove-button">削除</button></div></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
