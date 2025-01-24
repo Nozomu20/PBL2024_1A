@@ -8,6 +8,7 @@ if (!isset($_SESSION['name'])) {
     exit();
 }
 
+
 // ログインユーザーの名前を取得
 $name = $_SESSION['name'];
 $department = $_SESSION['department'];
