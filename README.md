@@ -2,11 +2,11 @@
 
 ・home.phpが通常ユーザーの画面
 
-http://nono1224.starfree.jp/pbl2/home.php
+https://sshg.cs.ehime-u.ac.jp/~j341nono/pbl3/home.php
 
 ・home_admin.phpが管理者用画面
 
-http://nono1224.starfree.jp/pbl2/home_admin.php
+https://sshg.cs.ehime-u.ac.jp/~j341nono/pbl3/home_admin.php
 
 管理者用画面にはお知らせ追加やお知らせリセット機能がある
 
