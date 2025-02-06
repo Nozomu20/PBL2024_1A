@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (empty($selectedDays)) {
         echo "<p class='error'>休み希望日を選択してください。</p>";
     } else {
-        $filename = './admin/data/req_' . $year . '_' . $month . '.csv';
+        $filename = './admin/data/req_' . $year . '_' . $month . '_'.$department.'.csv';
         $updatedData = [];
         $newData = [$name, implode(", ", $selectedDays)];
         $isUpdated = false;
